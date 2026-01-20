@@ -1,10 +1,14 @@
 package routes
 
 import (
+	"crud-app/controllers"
+
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
-func UserRoutes(db *gorm.DB, router *gin.Engine) {
-
+func UserRouter(router *gin.Engine) {
+	user := router.Group("/users")
+	{
+		user.POST("/signup", controllers.UserSignup)
+	}
 }

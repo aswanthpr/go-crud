@@ -10,12 +10,12 @@ import (
 
 func main() {
 	configs.LoadEnv()
-	db := configs.ConnectDB()
+	configs.ConnectDB()
 
 	port := configs.GetEnv("PORT")
 	r := gin.Default()
 
-	routes.UserRoutes(db, r)
+	routes.UserRouter(r)
 	log.Println("server is running in  8080")
 	r.Run(":" + port)
 }
