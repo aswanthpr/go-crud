@@ -25,19 +25,15 @@ func UserSignup(c *gin.Context) {
 
 	var existing models.User
 
-	if err := configs.DB.Where("email = ?", form.Email).First(&existing).Error; err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "failed to check existing user",
-		})
-		return
-	} else if err == nil {
+	err := configs.DB.Where("email = ?", form.Email).First(&existing).Error
+	if err == nil {
+		// user already exists
 		c.JSON(http.StatusConflict, gin.H{
 			"error": "email is already registered",
 		})
 		return
 	}
 
-	
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(form.Password), bcrypt.DefaultCost)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -46,24 +42,24 @@ func UserSignup(c *gin.Context) {
 		return
 	}
 
-	user := models.User{
+	users := models.User{
 		Name:     form.Name,
 		Email:    form.Email,
 		Password: string(hashedPassword),
 	}
 
-	if err := configs.DB.Create(&user).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "failed to create user",
-		})
-		return
-	}
+	if err := configs.DB.Create(&users).Error; err != nil {
+	c.JSON(http.StatusInternalServerError, gin.H{
+		"error": err.Error(),
+	})
+	return
+}
 
 	c.JSON(http.StatusCreated, gin.H{"success": true, "message": "Singup Successful"})
 
 }
 
-func LoginUser(c *gin.Context) {
+func UserLogin(c *gin.Context) {
 	var form dtos.UserLoginFormDTO
 
 	if err := c.ShouldBindJSON(&form); err != nil {
