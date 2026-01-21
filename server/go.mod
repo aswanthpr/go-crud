@@ -5,6 +5,9 @@ go 1.25.5
 require (
 	github.com/gin-gonic/gin v1.11.0
 	github.com/joho/godotenv v1.5.1
+	golang.org/x/crypto v0.47.0
+	gorm.io/driver/sqlserver v1.6.3
+	gorm.io/gorm v1.31.1
 )
 
 require (
@@ -38,11 +41,8 @@ require (
 	github.com/ugorji/go/codec v1.3.1 // indirect
 	go.uber.org/mock v0.6.0 // indirect
 	golang.org/x/arch v0.23.0 // indirect
-	golang.org/x/crypto v0.47.0 // indirect
 	golang.org/x/net v0.49.0 // indirect
 	golang.org/x/sys v0.40.0 // indirect
 	golang.org/x/text v0.33.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
-	gorm.io/driver/sqlserver v1.6.3 // indirect
-	gorm.io/gorm v1.31.1 // indirect
 )
