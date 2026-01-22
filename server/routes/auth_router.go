@@ -7,7 +7,7 @@ import (
 )
 
 func AuthRouter(router *gin.Engine) {
-	user := router.Group("/auth")
+	user := router.Group("/api/auth")
 	{
 		user.POST("/signup", controllers.UserSignup)
 		user.POST("/login", controllers.UserLogin)
